@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    android:background="#fff"
+    android:clickable="true">
 
 
-</LinearLayout>
+    <View
+        android:id="@+id/guidlineView"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_centerInParent="true"
+        android:alpha="0.7"
+        android:background="#000" />
+
+
+</RelativeLayout>
