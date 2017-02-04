@@ -22,9 +22,7 @@ public class GuidlineView implements RotationGestureDetector.OnRotationGestureLi
 
     public GuidlineView(Context context) {
         this.context = context;
-
         rotationGestureDetector = new RotationGestureDetector(this);
-
         intializeViews();
         setListeners();
     }
@@ -64,5 +62,9 @@ public class GuidlineView implements RotationGestureDetector.OnRotationGestureLi
 
     public View getView() {
         return contentView;
+    }
+
+    public void onConfigrationChanged() {
+
     }
 }

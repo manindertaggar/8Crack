@@ -1,9 +1,11 @@
 package com.goldducks.a8crack;
 
 import android.content.Context;
+import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -19,6 +21,8 @@ public class ViewManager {
     private Point size = new Point();
     private int screenHeight, screenWidth;
     private static ViewManager runningInstance;
+    private GuidlineView guidlineView;
+    private HandleView handleView;
 
     public ViewManager(Context context) {
         if (runningInstance != null)
@@ -59,27 +63,57 @@ public class ViewManager {
         return screenWidth;
     }
 
-    public int screenHeightPercentage() {
-        int screenHeightPercent = getScreenHeight() / 100;
-        return screenHeightPercent;
-
-    }
-
-    public int screenWidthPercentage() {
-        int screenWidthPercent = getScreenWidth() / 100;
-        return screenWidthPercent;
-    }
-
-
-    public static ViewManager init(Context context) {
-        if (runningInstance != null)
-            return runningInstance;
-
-        return new ViewManager(context);
-
-    }
-
     public static ViewManager getRunningInstance() {
         return runningInstance;
     }
+
+    private void addGuildlineView() {
+        WindowManager.LayoutParams windowManagerLayoutParams = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                PixelFormat.TRANSLUCENT);
+        windowManagerLayoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+
+        guidlineView = new GuidlineView(context);
+        windowManager.addView(guidlineView.getView(), windowManagerLayoutParams);
+
+    }
+
+
+    private void addHandle() {
+        WindowManager.LayoutParams windowManagerLayoutParams = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                PixelFormat.TRANSLUCENT);
+        windowManagerLayoutParams.gravity = Gravity.TOP | Gravity.LEFT;
+
+        windowManagerLayoutParams.x = ViewManager.getRunningInstance().getScreenWidth() + 20;
+        windowManagerLayoutParams.y = 50;
+        handleView = new HandleView(context);
+        windowManager.addView(handleView.getView(), windowManagerLayoutParams);
+
+    }
+
+    public void onConfigrationChanged() {
+        calculateScreenDimentions();
+
+        if (guidlineView != null) {
+            guidlineView.onConfigrationChanged();
+        }
+
+        if (handleView != null) {
+            handleView.onConfigrationChanged();
+        }
+
+    }
+
+
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rlHandle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:alpha=".6"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:rotation="-25">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:adjustViewBounds="true"
+            android:background="#000"
+            android:scaleType="centerInside"
+            android:src="@drawable/bolt" />
+
+    </RelativeLayout>
+</FrameLayout>

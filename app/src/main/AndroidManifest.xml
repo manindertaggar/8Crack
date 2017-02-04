@@ -3,6 +3,7 @@
     package="com.goldducks.a8crack">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application android:label="@string/app_name">
         <activity
             android:name=".MainActivity"
@@ -10,10 +11,14 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".CrackService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
