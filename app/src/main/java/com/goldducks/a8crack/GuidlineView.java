@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 /**
  * Created by root on 4/2/17.
@@ -13,6 +14,7 @@ public class GuidlineView implements RotationGestureDetector.OnRotationGestureLi
     private Context context;
     private View contentView;
     private View guidlineView;
+    private RelativeLayout rlTouchListener;
     private RotationGestureDetector rotationGestureDetector;
 
     public GuidlineView(Context context) {
@@ -27,11 +29,11 @@ public class GuidlineView implements RotationGestureDetector.OnRotationGestureLi
     private void intializeViews() {
         contentView = LayoutInflater.from(context).inflate(R.layout.layout_guidline, null);
         guidlineView = contentView.findViewById(R.id.guidlineView);
-
+        rlTouchListener= (RelativeLayout) contentView.findViewById(R.id.rlTouchListener);
     }
 
     private void setListeners() {
-        contentView.setOnTouchListener(new View.OnTouchListener() {
+        rlTouchListener.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 rotationGestureDetector.onTouchEvent(motionEvent);
