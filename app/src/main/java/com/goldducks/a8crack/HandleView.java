@@ -1,9 +1,14 @@
 package com.goldducks.a8crack;
 
 import android.content.Context;
+import android.graphics.PixelFormat;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.CycleInterpolator;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 /**
@@ -15,47 +20,96 @@ public class HandleView {
     private View contentView;
     private RelativeLayout rlHandle;
     private Boolean isGuidlineShown = false;
+    private ViewManager viewManager;
+    private WindowManager.LayoutParams windowParams;
+    private ImageView ivHandle;
+    private int contentViewWidth, contentViewHeight;
 
     public HandleView(Context context) {
         this.context = context;
+        viewManager = new ViewManager(context);
+
+        getViewDimentions();
+
         intializeViews();
+        intializeWindowParams();
         setListeners();
+        tingleAfterDelay();
+    }
+
+    private void tingleAfterDelay() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                contentView.animate().setInterpolator(new CycleInterpolator(5)).setDuration(1000).rotation(8);
+            }
+        }, 5000);
+    }
+
+    private void intializeWindowParams() {
+        windowParams = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                PixelFormat.TRANSLUCENT);
+        windowParams.gravity = Gravity.TOP | Gravity.LEFT;
+
+        windowParams.x = ViewManager.getRunningInstance().getScreenWidth() - contentViewWidth;
+        windowParams.y = 50;
     }
 
     private void intializeViews() {
         contentView = LayoutInflater.from(context).inflate(R.layout.layout_handle, null);
         rlHandle = (RelativeLayout) contentView.findViewById(R.id.rlHandle);
+        ivHandle = (ImageView) contentView.findViewById(R.id.ivHandle);
     }
 
     private void setListeners() {
-        rlHandle.setOnTouchListener(new View.OnTouchListener() {
+        rlHandle.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public void onClick(View view) {
                 if (isGuidlineShown) {
                     hideGuidelines();
                 } else {
                     showGuidelines();
                 }
-                return false;
             }
-
-
         });
     }
 
     private void showGuidelines() {
-
+        contentView.animate().setInterpolator(new CycleInterpolator(3)).setDuration(250).rotationY(200);
+        ivHandle.setImageResource(R.drawable.close);
+        isGuidlineShown = true;
+        viewManager.showGuidelines();
     }
 
     private void hideGuidelines() {
-
+        contentView.animate().setInterpolator(new CycleInterpolator(3)).setDuration(250).rotationY(200);
+        ivHandle.setImageResource(R.drawable.bolt);
+        isGuidlineShown = false;
+        viewManager.hideGuidelines();
     }
 
     public View getView() {
         return contentView;
     }
 
-    public void onConfigrationChanged() {
-
+    public WindowManager.LayoutParams getWindowParams() {
+        return windowParams;
     }
+
+    public void onConfigrationChanged() {
+        windowParams.x = ViewManager.getRunningInstance().getScreenWidth() - contentViewWidth;
+        windowParams.y = 50;
+    }
+
+    public void getViewDimentions() {
+        contentViewWidth = (int) context.getResources().getDimension(R.dimen.handle_width);
+        contentViewHeight = (int) context.getResources().getDimension(R.dimen.handle_height);
+    }
+
 }

@@ -24,6 +24,7 @@ public class CrackService extends Service {
     public void onCreate() {
         super.onCreate();
         viewManager = new ViewManager(getApplicationContext());
+        viewManager.addViews();
     }
 
 
