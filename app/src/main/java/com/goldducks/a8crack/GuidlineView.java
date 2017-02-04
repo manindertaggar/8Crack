@@ -1,9 +1,11 @@
 package com.goldducks.a8crack;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 /**
@@ -11,6 +13,7 @@ import android.widget.RelativeLayout;
  */
 
 public class GuidlineView implements RotationGestureDetector.OnRotationGestureListener {
+    private static final String TAG = GuidlineView.class.getCanonicalName();
     private Context context;
     private View contentView;
     private View guidlineView;
@@ -29,7 +32,16 @@ public class GuidlineView implements RotationGestureDetector.OnRotationGestureLi
     private void intializeViews() {
         contentView = LayoutInflater.from(context).inflate(R.layout.layout_guidline, null);
         guidlineView = contentView.findViewById(R.id.guidlineView);
-        rlTouchListener= (RelativeLayout) contentView.findViewById(R.id.rlTouchListener);
+        rlTouchListener = (RelativeLayout) contentView.findViewById(R.id.rlTouchListener);
+        fixGuidlineViewWidth();
+    }
+
+    private void fixGuidlineViewWidth() {
+        ViewGroup.LayoutParams params = guidlineView.getLayoutParams();
+        params.width = ViewManager.getRunningInstance().getScreenHeight() * 2;
+        guidlineView.setLayoutParams(params);
+
+        Log.d(TAG, "fixGuidlineViewWidth: "+params.width);
     }
 
     private void setListeners() {
@@ -37,7 +49,7 @@ public class GuidlineView implements RotationGestureDetector.OnRotationGestureLi
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 rotationGestureDetector.onTouchEvent(motionEvent);
-                return false;
+                return true;
             }
         });
 

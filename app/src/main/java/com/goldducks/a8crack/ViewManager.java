@@ -2,6 +2,7 @@ package com.goldducks.a8crack;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -11,6 +12,7 @@ import android.view.WindowManager;
  */
 
 public class ViewManager {
+    private static final String TAG = ViewManager.class.getCanonicalName();
     private WindowManager windowManager;
     private Context context;
     private Display display;
@@ -49,6 +51,7 @@ public class ViewManager {
     }
 
     public int getScreenHeight() {
+        Log.d(TAG, "getScreenHeight: " + screenHeight);
         return screenHeight;
     }
 
@@ -76,7 +79,7 @@ public class ViewManager {
 
     }
 
-    public static ViewManager getRunningInstance(){
+    public static ViewManager getRunningInstance() {
         return runningInstance;
     }
 }

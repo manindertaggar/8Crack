@@ -2,7 +2,6 @@ package com.goldducks.a8crack;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
 public class MainActivity extends Activity {
 
@@ -11,10 +10,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ViewManager.init(this);
+
         PermissionManager.checkForOverlayPermission(this);
 
-        FrameLayout linearLayout = (FrameLayout) findViewById(R.id.ll);
-        linearLayout.addView(new GuidlineView(this).getView());
+        GuidlineView guidlineView = new GuidlineView(this);
+
+        ViewManager.getRunningInstance().addView(guidlineView.getView(), LayoutParamGenerator.getNewLayoutParams());
+        finish();
     }
 
 }
