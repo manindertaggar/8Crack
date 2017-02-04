@@ -22,14 +22,12 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     private View guidelineView;
     private RelativeLayout rlTouchListener;
     private RotationGestureDetector rotationGestureDetector;
-    private ViewManager viewManager;
     private WindowManager.LayoutParams windowParams;
     private Boolean isShown = false;
 
     public GuidelineView(Context context) {
         this.context = context;
         rotationGestureDetector = new RotationGestureDetector(this);
-        viewManager = new ViewManager(context);
 
         intializeViews();
         intializeWindowParams();
@@ -46,14 +44,13 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
                         WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
                         WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
-        windowParams.gravity = Gravity.TOP | Gravity.LEFT;
+        windowParams.gravity = Gravity.CENTER;
     }
 
     private void intializeViews() {
         contentView = LayoutInflater.from(context).inflate(R.layout.layout_guidline, null);
         guidelineView = contentView.findViewById(R.id.guidlineView);
         rlTouchListener = (RelativeLayout) contentView.findViewById(R.id.rlTouchListener);
-        contentView.setVisibility(View.GONE);
     }
 
     private void fixGuidelineViewWidth() {

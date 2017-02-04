@@ -20,14 +20,13 @@ public class HandleView {
     private View contentView;
     private RelativeLayout rlHandle;
     private Boolean isGuidelineShown = false;
-    private ViewManager viewManager;
+    private ViewManager viewManager=ViewManager.getRunningInstance();
     private WindowManager.LayoutParams windowParams;
     private ImageView ivHandle;
     private int contentViewWidth, contentViewHeight;
 
     public HandleView(Context context) {
         this.context = context;
-        viewManager = new ViewManager(context);
 
         getViewDimentions();
 
@@ -81,14 +80,14 @@ public class HandleView {
     }
 
     private void showGuidelines() {
-        contentView.animate().setInterpolator(new CycleInterpolator(3)).setDuration(250).rotationY(200);
+        contentView.animate().setInterpolator(new CycleInterpolator(1)).setDuration(250).rotationY(360);
         ivHandle.setImageResource(R.drawable.close);
         isGuidelineShown = true;
         viewManager.showGuidelines();
     }
 
     private void hideGuidelines() {
-        contentView.animate().setInterpolator(new CycleInterpolator(3)).setDuration(250).rotationY(200);
+        contentView.animate().setInterpolator(new CycleInterpolator(1)).setDuration(250).rotationY(360);
         ivHandle.setImageResource(R.drawable.bolt);
         isGuidelineShown = false;
         viewManager.hideGuidelines();

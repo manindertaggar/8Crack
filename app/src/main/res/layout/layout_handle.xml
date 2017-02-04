@@ -11,7 +11,7 @@
         android:alpha=".6"
         android:clickable="true"
         android:orientation="vertical"
-        android:rotation="-25">
+        android:rotation="-45">
 
         <ImageView
             android:layout_width="@dimen/handle_width"

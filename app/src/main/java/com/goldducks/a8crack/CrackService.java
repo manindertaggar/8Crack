@@ -27,7 +27,6 @@ public class CrackService extends Service {
         viewManager.addViews();
     }
 
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

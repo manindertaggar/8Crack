@@ -7,6 +7,7 @@
         android:id="@+id/rlTouchListener"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:background="#3000"
         android:layout_centerInParent="true"
         android:clickable="true">
 

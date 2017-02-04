@@ -25,6 +25,7 @@ public class ViewManager {
     public ViewManager(Context context) {
         if (runningInstance != null)
             return;
+
         runningInstance = this;
         this.context = context;
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -36,16 +37,11 @@ public class ViewManager {
     private void intializeViews() {
         handleView = new HandleView(context);
         guidelineView = new GuidelineView(context);
-
     }
 
     public void addViews() {
-        addHandleView();
         addGuidelineView();
-    }
-
-    private void addGuidelineView() {
-        windowManager.addView(guidelineView.getView(), guidelineView.getWindowParams());
+        addHandleView();
     }
 
     private void calculateScreenDimentions() {
@@ -54,7 +50,6 @@ public class ViewManager {
         screenWidth = size.x;
         screenHeight = size.y;
     }
-
 
     public void updateViewLayout(View view, WindowManager.LayoutParams layoutParams) {
         windowManager.updateViewLayout(view, layoutParams);
@@ -73,10 +68,15 @@ public class ViewManager {
         return runningInstance;
     }
 
-
     private void addHandleView() {
         windowManager.addView(handleView.getView(), handleView.getWindowParams());
     }
+
+    private void addGuidelineView() {
+        windowManager.addView(guidelineView.getView(), guidelineView.getWindowParams());
+        guidelineView.hide();
+    }
+
 
     public void onConfigrationChanged() {
         calculateScreenDimentions();
@@ -93,12 +93,19 @@ public class ViewManager {
 
     }
 
-
     public void showGuidelines() {
+        if (guidelineView == null) {
+            Log.w(TAG, "showGuidelines: guidlinesView is null ");
+            return;
+        }
         guidelineView.show();
     }
 
     public void hideGuidelines() {
+        if (guidelineView == null) {
+            Log.w(TAG, "hideGuidelines: guidlinesView is null ");
+            return;
+        }
         guidelineView.hide();
     }
 }
