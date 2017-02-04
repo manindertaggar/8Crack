@@ -88,7 +88,6 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
                         getWindowParams().x += diffX;
                         getWindowParams().y += diffY;
 
-//                        Log.d(TAG, "onTouch: x: " + getWindowParams().x + " y: " + getWindowParams().y);
                         Log.d(TAG, "onTouch: x: " + diffX + " y: " + diffY);
                         viewManager.updateViewLayout(getView(), getWindowParams());
 

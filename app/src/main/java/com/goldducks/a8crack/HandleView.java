@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.CycleInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -80,14 +81,14 @@ public class HandleView {
     }
 
     private void showGuidelines() {
-        contentView.animate().setInterpolator(new CycleInterpolator(1)).setDuration(250).rotationY(360);
+        contentView.animate().setInterpolator(new DecelerateInterpolator()).setDuration(250).rotation(135);
         ivHandle.setImageResource(R.drawable.close);
         isGuidelineShown = true;
         viewManager.showGuidelines();
     }
 
     private void hideGuidelines() {
-        contentView.animate().setInterpolator(new CycleInterpolator(1)).setDuration(250).rotationY(360);
+        contentView.animate().setInterpolator(new DecelerateInterpolator()).setDuration(250).rotation(-135);
         ivHandle.setImageResource(R.drawable.bolt);
         isGuidelineShown = false;
         viewManager.hideGuidelines();

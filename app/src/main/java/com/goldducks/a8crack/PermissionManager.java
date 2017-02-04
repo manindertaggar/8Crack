@@ -1,5 +1,6 @@
 package com.goldducks.a8crack;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,4 +20,5 @@ public class PermissionManager {
             }
         }
     }
+
 }
