@@ -9,8 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 /**
  * Created by Maninder Taggar on 4/2/17.
@@ -21,13 +19,12 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     private Context context;
     private View contentView;
     private View guidelineView;
-    private RelativeLayout rlTouchListener;
     private RotationGestureDetector rotationGestureDetector;
     private WindowManager.LayoutParams windowParams;
     private Boolean isShown = false;
-    private Boolean isLongPressed = false;
     private int length;
-    private TextView tvIncrement, tvDecrement;
+    private ViewManager viewManager = ViewManager.getRunningInstance();
+    private int curruntTouchX, curruntTouchY, previousTouchX, previousTouchY;
 
     public GuidelineView(Context context) {
         this.context = context;
@@ -41,22 +38,19 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
 
     private void intializeWindowParams() {
         windowParams = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                         WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
                         WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
-        windowParams.gravity = Gravity.TOP | Gravity.LEFT;
+        windowParams.gravity = Gravity.CENTER;
     }
 
     private void intializeViews() {
         contentView = LayoutInflater.from(context).inflate(R.layout.layout_guidline, null);
         guidelineView = contentView.findViewById(R.id.guidlineView);
-        rlTouchListener = (RelativeLayout) contentView.findViewById(R.id.rlTouchListener);
-        tvIncrement = (TextView) contentView.findViewById(R.id.tvIncrement);
-        tvDecrement = (TextView) contentView.findViewById(R.id.tvDecrement);
     }
 
     private void fixGuidelineViewWidth() {
@@ -68,39 +62,38 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     }
 
     private void setListeners() {
-        rlTouchListener.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                rotationGestureDetector.onTouchEvent(motionEvent);
-                return true;
-            }
-        });
+//        rlTouchListener.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                rotationGestureDetector.onTouchEvent(motionEvent);
+//                return true;
+//            }
+//        });
 
-
-        tvIncrement.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                guidelineView.animate().setDuration(0).rotationBy(1);
-                return false;
-            }
-        });
-        tvDecrement.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                guidelineView.animate().setDuration(0).rotationBy(-1);
-                return false;
-            }
-        });
 
         guidelineView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        curruntTouchX = previousTouchX = (int) motionEvent.getRawX();
+                        curruntTouchY = previousTouchY = (int) motionEvent.getRawY();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        guidelineView.setX(motionEvent.getRawX() - 100 - length / 4);
-                        guidelineView.setY(motionEvent.getRawY() - 100);
+                        curruntTouchX = (int) motionEvent.getRawX();
+                        curruntTouchY = (int) motionEvent.getRawY();
+
+                        int diffX = (curruntTouchX - previousTouchX);
+                        int diffY = (curruntTouchY - previousTouchY);
+                        getWindowParams().x += diffX;
+                        getWindowParams().y += diffY;
+
+//                        Log.d(TAG, "onTouch: x: " + getWindowParams().x + " y: " + getWindowParams().y);
+                        Log.d(TAG, "onTouch: x: " + diffX + " y: " + diffY);
+                        viewManager.updateViewLayout(getView(), getWindowParams());
+
+                        previousTouchX = curruntTouchX;
+                        previousTouchY = curruntTouchY;
                         break;
                     case MotionEvent.ACTION_UP:
                         break;
