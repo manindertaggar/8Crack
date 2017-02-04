@@ -27,7 +27,7 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     private Boolean isShown = false;
     private Boolean isLongPressed = false;
     private int length;
-    private TextView tvIncrement,tvDecrement;
+    private TextView tvIncrement, tvDecrement;
 
     public GuidelineView(Context context) {
         this.context = context;
@@ -55,6 +55,8 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
         contentView = LayoutInflater.from(context).inflate(R.layout.layout_guidline, null);
         guidelineView = contentView.findViewById(R.id.guidlineView);
         rlTouchListener = (RelativeLayout) contentView.findViewById(R.id.rlTouchListener);
+        tvIncrement = (TextView) contentView.findViewById(R.id.tvIncrement);
+        tvDecrement = (TextView) contentView.findViewById(R.id.tvDecrement);
     }
 
     private void fixGuidelineViewWidth() {
@@ -69,25 +71,43 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
         rlTouchListener.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        if (motionEvent.getPointerCount() == 1) {
-                            guidelineView.setX(motionEvent.getRawX() - -30 - length / 4);
-                            guidelineView.setY(motionEvent.getRawY());
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        break;
-                }
-
                 rotationGestureDetector.onTouchEvent(motionEvent);
                 return true;
             }
         });
 
+
+        tvIncrement.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                guidelineView.animate().setDuration(0).rotationBy(1);
+                return false;
+            }
+        });
+        tvDecrement.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                guidelineView.animate().setDuration(0).rotationBy(-1);
+                return false;
+            }
+        });
+
+        guidelineView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        guidelineView.setX(motionEvent.getRawX() - 100 - length / 4);
+                        guidelineView.setY(motionEvent.getRawY() - 100);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override

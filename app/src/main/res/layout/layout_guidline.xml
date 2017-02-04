@@ -5,6 +5,7 @@
 
     <RelativeLayout
         android:id="@+id/rlTouchListener"
+        android:background=""
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
@@ -39,13 +40,16 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:background="#4000"
+            android:background="#A000"
             android:clickable="true"
+            android:paddingBottom="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:layout_margin="1dp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="  +  " />
+            android:text="  +  "
+            android:textColor="#fff"
+            android:textSize="20sp" />
 
 
         <TextView
@@ -55,12 +59,15 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="#4000"
+            android:background="#A000"
             android:clickable="true"
+            android:paddingBottom="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="  -  " />
+            android:text="  -  "
+            android:layout_margin="1dp"
+            android:textColor="#fff"
+            android:textSize="20sp" />
     </RelativeLayout>
 </RelativeLayout>

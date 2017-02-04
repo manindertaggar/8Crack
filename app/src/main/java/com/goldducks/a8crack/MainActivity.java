@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
         PermissionManager.checkForOverlayPermission(this);
         new ViewManager(getApplicationContext());
         startService(new Intent(this, CrackService.class));
-
+        finish();
     }
 
 
