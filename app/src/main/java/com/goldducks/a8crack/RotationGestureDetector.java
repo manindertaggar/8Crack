@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 
 /**
- * Created by root on 3/2/17.
+ * Created by Maninder Taggar on 3/2/17.
  */
 
 public class RotationGestureDetector {

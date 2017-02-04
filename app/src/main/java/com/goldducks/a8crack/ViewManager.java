@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 /**
- * Created by root on 3/2/17.
+ * Created by Maninder Taggar on 3/2/17.
  */
 
 public class ViewManager {

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 /**
- * Created by root on 4/2/17.
+ * Created by Maninder Taggar on 4/2/17.
  */
 
 public class GuidlineView implements RotationGestureDetector.OnRotationGestureListener {
