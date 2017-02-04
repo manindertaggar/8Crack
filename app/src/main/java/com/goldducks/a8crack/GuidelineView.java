@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * Created by Maninder Taggar on 4/2/17.
@@ -24,6 +25,9 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     private RotationGestureDetector rotationGestureDetector;
     private WindowManager.LayoutParams windowParams;
     private Boolean isShown = false;
+    private Boolean isLongPressed = false;
+    private int length;
+    private TextView tvIncrement,tvDecrement;
 
     public GuidelineView(Context context) {
         this.context = context;
@@ -44,7 +48,7 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
                         WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
                         WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
-        windowParams.gravity = Gravity.CENTER;
+        windowParams.gravity = Gravity.TOP | Gravity.LEFT;
     }
 
     private void intializeViews() {
@@ -55,7 +59,8 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
 
     private void fixGuidelineViewWidth() {
         ViewGroup.LayoutParams params = guidelineView.getLayoutParams();
-        params.width = ViewManager.getRunningInstance().getScreenHeight() * 2;
+        length = ViewManager.getRunningInstance().getScreenWidth() * 2;
+        params.width = length;
         guidelineView.setLayoutParams(params);
         Log.d(TAG, "fixGuidelineViewWidth: " + params.width);
     }
@@ -64,10 +69,25 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
         rlTouchListener.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if (motionEvent.getPointerCount() == 1) {
+                            guidelineView.setX(motionEvent.getRawX() - -30 - length / 4);
+                            guidelineView.setY(motionEvent.getRawY());
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        break;
+                }
+
                 rotationGestureDetector.onTouchEvent(motionEvent);
                 return true;
             }
         });
+
     }
 
     @Override
@@ -82,7 +102,7 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     }
 
     public void onConfigrationChanged() {
-
+        fixGuidelineViewWidth();
     }
 
     public WindowManager.LayoutParams getWindowParams() {

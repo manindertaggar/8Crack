@@ -4,11 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.IBinder;
-import android.util.Log;
 
 public class CrackService extends Service {
     private static final String TAG = CrackService.class.getCanonicalName();
-    ViewManager viewManager;
+    ViewManager viewManager = ViewManager.getRunningInstance();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -23,7 +22,6 @@ public class CrackService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        viewManager = new ViewManager(getApplicationContext());
         viewManager.addViews();
     }
 

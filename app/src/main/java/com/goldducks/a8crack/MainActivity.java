@@ -12,6 +12,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         PermissionManager.checkForOverlayPermission(this);
+        new ViewManager(getApplicationContext());
         startService(new Intent(this, CrackService.class));
 
     }

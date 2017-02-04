@@ -7,7 +7,6 @@
         android:id="@+id/rlTouchListener"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="#3000"
         android:layout_centerInParent="true"
         android:clickable="true">
 
@@ -22,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:layout_centerInParent="true"
-                android:alpha="0.5"
+                android:alpha="0.8"
                 android:background="#fff" />
 
             <View
@@ -32,5 +31,36 @@
                 android:background="#080" />
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvIncrement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="#4000"
+            android:clickable="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="  +  " />
+
+
+        <TextView
+            android:id="@+id/tvDecrement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="#4000"
+            android:clickable="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="  -  " />
     </RelativeLayout>
 </RelativeLayout>
