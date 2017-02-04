@@ -19,7 +19,7 @@ public class ViewManager {
     private Point size = new Point();
     private int screenHeight, screenWidth;
     private static ViewManager runningInstance;
-    private GuidlineView guidlineView;
+    private GuidelineView guidelineView;
     private HandleView handleView;
 
     public ViewManager(Context context) {
@@ -35,17 +35,17 @@ public class ViewManager {
 
     private void intializeViews() {
         handleView = new HandleView(context);
-        guidlineView = new GuidlineView(context);
+        guidelineView = new GuidelineView(context);
 
     }
 
     public void addViews() {
         addHandleView();
-        addGuidlineView();
+        addGuidelineView();
     }
 
-    private void addGuidlineView() {
-        windowManager.addView(guidlineView.getView(), guidlineView.getWindowParams());
+    private void addGuidelineView() {
+        windowManager.addView(guidelineView.getView(), guidelineView.getWindowParams());
     }
 
     private void calculateScreenDimentions() {
@@ -73,9 +73,6 @@ public class ViewManager {
         return runningInstance;
     }
 
-//    private void addGuildlineView() {
-//        windowManager.addView(guidlineView.getView(), guidlineView.);
-//    }
 
     private void addHandleView() {
         windowManager.addView(handleView.getView(), handleView.getWindowParams());
@@ -84,9 +81,9 @@ public class ViewManager {
     public void onConfigrationChanged() {
         calculateScreenDimentions();
 
-        if (guidlineView != null) {
-            guidlineView.onConfigrationChanged();
-//            updateViewLayout(guidlineView.getView(), guidlineView.getWindowParams());
+        if (guidelineView != null) {
+            guidelineView.onConfigrationChanged();
+            updateViewLayout(guidelineView.getView(), guidelineView.getWindowParams());
         }
 
         if (handleView != null) {
@@ -98,10 +95,10 @@ public class ViewManager {
 
 
     public void showGuidelines() {
-
+        guidelineView.show();
     }
 
     public void hideGuidelines() {
-
+        guidelineView.hide();
     }
 }

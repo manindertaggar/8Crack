@@ -19,7 +19,7 @@ public class HandleView {
     private Context context;
     private View contentView;
     private RelativeLayout rlHandle;
-    private Boolean isGuidlineShown = false;
+    private Boolean isGuidelineShown = false;
     private ViewManager viewManager;
     private WindowManager.LayoutParams windowParams;
     private ImageView ivHandle;
@@ -71,7 +71,7 @@ public class HandleView {
         rlHandle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isGuidlineShown) {
+                if (isGuidelineShown) {
                     hideGuidelines();
                 } else {
                     showGuidelines();
@@ -83,14 +83,14 @@ public class HandleView {
     private void showGuidelines() {
         contentView.animate().setInterpolator(new CycleInterpolator(3)).setDuration(250).rotationY(200);
         ivHandle.setImageResource(R.drawable.close);
-        isGuidlineShown = true;
+        isGuidelineShown = true;
         viewManager.showGuidelines();
     }
 
     private void hideGuidelines() {
         contentView.animate().setInterpolator(new CycleInterpolator(3)).setDuration(250).rotationY(200);
         ivHandle.setImageResource(R.drawable.bolt);
-        isGuidlineShown = false;
+        isGuidelineShown = false;
         viewManager.hideGuidelines();
     }
 

@@ -15,17 +15,18 @@ import android.widget.RelativeLayout;
  * Created by Maninder Taggar on 4/2/17.
  */
 
-public class GuidlineView implements RotationGestureDetector.OnRotationGestureListener {
-    private static final String TAG = GuidlineView.class.getCanonicalName();
+public class GuidelineView implements RotationGestureDetector.OnRotationGestureListener {
+    private static final String TAG = GuidelineView.class.getCanonicalName();
     private Context context;
     private View contentView;
-    private View guidlineView;
+    private View guidelineView;
     private RelativeLayout rlTouchListener;
     private RotationGestureDetector rotationGestureDetector;
     private ViewManager viewManager;
     private WindowManager.LayoutParams windowParams;
+    private Boolean isShown = false;
 
-    public GuidlineView(Context context) {
+    public GuidelineView(Context context) {
         this.context = context;
         rotationGestureDetector = new RotationGestureDetector(this);
         viewManager = new ViewManager(context);
@@ -33,7 +34,7 @@ public class GuidlineView implements RotationGestureDetector.OnRotationGestureLi
         intializeViews();
         intializeWindowParams();
         setListeners();
-        fixGuidlineViewWidth();
+        fixGuidelineViewWidth();
     }
 
     private void intializeWindowParams() {
@@ -50,15 +51,16 @@ public class GuidlineView implements RotationGestureDetector.OnRotationGestureLi
 
     private void intializeViews() {
         contentView = LayoutInflater.from(context).inflate(R.layout.layout_guidline, null);
-        guidlineView = contentView.findViewById(R.id.guidlineView);
+        guidelineView = contentView.findViewById(R.id.guidlineView);
         rlTouchListener = (RelativeLayout) contentView.findViewById(R.id.rlTouchListener);
+        contentView.setVisibility(View.GONE);
     }
 
-    private void fixGuidlineViewWidth() {
-        ViewGroup.LayoutParams params = guidlineView.getLayoutParams();
+    private void fixGuidelineViewWidth() {
+        ViewGroup.LayoutParams params = guidelineView.getLayoutParams();
         params.width = ViewManager.getRunningInstance().getScreenHeight() * 2;
-        guidlineView.setLayoutParams(params);
-        Log.d(TAG, "fixGuidlineViewWidth: " + params.width);
+        guidelineView.setLayoutParams(params);
+        Log.d(TAG, "fixGuidelineViewWidth: " + params.width);
     }
 
     private void setListeners() {
@@ -74,7 +76,7 @@ public class GuidlineView implements RotationGestureDetector.OnRotationGestureLi
     @Override
     public void OnRotation(RotationGestureDetector rotationDetector) {
         float angle = -rotationDetector.getAngle();
-        guidlineView.setRotation(angle);
+        guidelineView.setRotation(angle);
     }
 
 
@@ -88,5 +90,17 @@ public class GuidlineView implements RotationGestureDetector.OnRotationGestureLi
 
     public WindowManager.LayoutParams getWindowParams() {
         return windowParams;
+    }
+
+    public void show() {
+        contentView.setVisibility(View.VISIBLE);
+    }
+
+    public void hide() {
+        contentView.setVisibility(View.GONE);
+    }
+
+    public Boolean isShown() {
+        return isShown;
     }
 }
