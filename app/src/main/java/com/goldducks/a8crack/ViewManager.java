@@ -25,7 +25,7 @@ public class ViewManager {
     public ViewManager(Context context) {
         if (runningInstance != null)
             return;
-
+        Log.d(TAG, "ViewManager: ");
         runningInstance = this;
         this.context = context;
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -35,6 +35,7 @@ public class ViewManager {
     }
 
     private void intializeViews() {
+        Log.d(TAG, "intializeViews: ");
         handleView = new HandleView(context);
         guidelineView = new GuidelineView(context);
     }
@@ -46,6 +47,7 @@ public class ViewManager {
     }
 
     private void calculateScreenDimentions() {
+        Log.d(TAG, "calculateScreenDimentions: ");
         display = windowManager.getDefaultDisplay();
         display.getSize(size);
         screenWidth = size.x;
@@ -53,6 +55,7 @@ public class ViewManager {
     }
 
     public void updateViewLayout(View view, WindowManager.LayoutParams layoutParams) {
+        Log.d(TAG, "updateViewLayout: ");
         windowManager.updateViewLayout(view, layoutParams);
     }
 

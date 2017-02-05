@@ -27,6 +27,7 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     private int curruntTouchX, curruntTouchY, previousTouchX, previousTouchY;
 
     public GuidelineView(Context context) {
+        Log.d(TAG, "GuidelineView: ");
         this.context = context;
         rotationGestureDetector = new RotationGestureDetector(this);
 
@@ -37,6 +38,7 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     }
 
     private void intializeWindowParams() {
+        Log.d(TAG, "intializeWindowParams: ");
         windowParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -49,6 +51,7 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     }
 
     private void intializeViews() {
+        Log.d(TAG, "intializeViews: ");
         contentView = LayoutInflater.from(context).inflate(R.layout.layout_guidline, null);
         guidelineView = contentView.findViewById(R.id.guidlineView);
     }
@@ -69,7 +72,7 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
 //                return true;
 //            }
 //        });
-
+        Log.d(TAG, "setListeners: ");
 
         guidelineView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -104,6 +107,7 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
 
     @Override
     public void OnRotation(RotationGestureDetector rotationDetector) {
+        Log.d(TAG, "OnRotation: ");
         float angle = -rotationDetector.getAngle();
         guidelineView.setRotation(angle);
     }
@@ -114,6 +118,7 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     }
 
     public void onConfigrationChanged() {
+        Log.d(TAG, "onConfigrationChanged: ");
         fixGuidelineViewWidth();
     }
 
@@ -122,14 +127,17 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     }
 
     public void show() {
+        Log.d(TAG, "show: ");
         contentView.setVisibility(View.VISIBLE);
     }
 
     public void hide() {
+        Log.d(TAG, "hide: ");
         contentView.setVisibility(View.GONE);
     }
 
     public Boolean isShown() {
+        Log.d(TAG, "isShown: " + isShown);
         return isShown;
     }
 }

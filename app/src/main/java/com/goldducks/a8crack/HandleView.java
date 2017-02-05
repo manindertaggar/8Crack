@@ -3,6 +3,7 @@ package com.goldducks.a8crack;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +18,18 @@ import android.widget.RelativeLayout;
  */
 
 public class HandleView {
+    private static final String TAG = HandleView.class.getCanonicalName();
     private Context context;
     private View contentView;
     private RelativeLayout rlHandle;
     private Boolean isGuidelineShown = false;
-    private ViewManager viewManager=ViewManager.getRunningInstance();
+    private ViewManager viewManager = ViewManager.getRunningInstance();
     private WindowManager.LayoutParams windowParams;
     private ImageView ivHandle;
     private int contentViewWidth, contentViewHeight;
 
     public HandleView(Context context) {
+        Log.d(TAG, "HandleView: ");
         this.context = context;
 
         getViewDimentions();
@@ -47,6 +50,7 @@ public class HandleView {
     }
 
     private void intializeWindowParams() {
+        Log.d(TAG, "intializeWindowParams: ");
         windowParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -62,12 +66,14 @@ public class HandleView {
     }
 
     private void intializeViews() {
+        Log.d(TAG, "intializeViews: ");
         contentView = LayoutInflater.from(context).inflate(R.layout.layout_handle, null);
         rlHandle = (RelativeLayout) contentView.findViewById(R.id.rlHandle);
         ivHandle = (ImageView) contentView.findViewById(R.id.ivHandle);
     }
 
     private void setListeners() {
+        Log.d(TAG, "setListeners: ");
         rlHandle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +87,7 @@ public class HandleView {
     }
 
     private void showGuidelines() {
+        Log.d(TAG, "showGuidelines: ");
         contentView.animate().setInterpolator(new DecelerateInterpolator()).setDuration(250).rotation(135);
         ivHandle.setImageResource(R.drawable.close);
         isGuidelineShown = true;
@@ -88,6 +95,7 @@ public class HandleView {
     }
 
     private void hideGuidelines() {
+        Log.d(TAG, "hideGuidelines: ");
         contentView.animate().setInterpolator(new DecelerateInterpolator()).setDuration(250).rotation(-135);
         ivHandle.setImageResource(R.drawable.bolt);
         isGuidelineShown = false;
@@ -105,11 +113,14 @@ public class HandleView {
     public void onConfigrationChanged() {
         windowParams.x = ViewManager.getRunningInstance().getScreenWidth() - contentViewWidth;
         windowParams.y = 50;
+
+        Log.d(TAG, "onConfigrationChanged: " + windowParams.x + " " + windowParams.y);
     }
 
     public void getViewDimentions() {
         contentViewWidth = (int) context.getResources().getDimension(R.dimen.handle_width);
         contentViewHeight = (int) context.getResources().getDimension(R.dimen.handle_height);
+        Log.d(TAG, "getViewDimentions: " + contentViewWidth + " " + contentViewHeight);
     }
 
 }

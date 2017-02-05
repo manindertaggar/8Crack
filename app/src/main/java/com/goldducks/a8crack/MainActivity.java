@@ -3,6 +3,7 @@ package com.goldducks.a8crack;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 public class MainActivity extends Activity {
 
@@ -16,7 +17,8 @@ public class MainActivity extends Activity {
         PermissionManager.checkForOverlay(this);
         PermissionManager.checkForUsageAccess(this);
 
-        startService(new Intent(this, RunningAppDetectorService.class));
+//        startService(new Intent(this, RunningAppDetectorService.class));
+        startService(new Intent(this, CrackService.class));
 
         finish();
     }
