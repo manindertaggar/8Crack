@@ -42,11 +42,9 @@ public class MainActivity extends Activity {
         Log.d(TAG, "toggle: ");
         if (ControlBoard.isServiceRunning()) {
             ControlBoard.stop(this);
-            tvToggleService.setText("Stop");
             tvToggleService.setText("Start");
         } else {
             ControlBoard.start(this);
-            tvToggleService.setText("Start");
             tvToggleService.setText("Stop");
         }
 

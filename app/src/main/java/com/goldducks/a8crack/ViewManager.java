@@ -134,11 +134,11 @@ public class ViewManager {
         return new ViewManager(applicationContext);
     }
 
-    public void rotateAntiClockwiseBy(int r) {
+    public void rotateAntiClockwiseBy(float r) {
         guidelineView.rotateAnticlockwiseBy(r);
     }
 
-    public void rotateClockwiseBy(int r) {
+    public void rotateClockwiseBy(float r) {
         guidelineView.rotateClockwiseBy(r);
     }
 }

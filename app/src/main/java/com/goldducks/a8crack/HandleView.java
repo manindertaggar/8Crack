@@ -49,16 +49,16 @@ public class HandleView {
         clockwiseRotationRunnable = new Runnable() {
             @Override
             public void run() {
-                viewManager.rotateClockwiseBy(1);
-                rotationHandler.postDelayed(this, 40);
+                viewManager.rotateClockwiseBy(0.5f);
+                rotationHandler.postDelayed(this, 20);
             }
         };
 
         antiClockwiseRotationRunnable = new Runnable() {
             @Override
             public void run() {
-                viewManager.rotateAntiClockwiseBy(1);
-                rotationHandler.postDelayed(this, 40);
+                viewManager.rotateAntiClockwiseBy(0.5f);
+                rotationHandler.postDelayed(this, 20);
             }
         };
     }

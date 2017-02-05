@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 /**
@@ -25,8 +24,8 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     private Boolean isShown = false;
     private int length;
     private View guideStick;
-    private ViewManager viewManager = ViewManager.getRunningInstance();
-    private int curruntTouchX, curruntTouchY, previousTouchX, previousTouchY;
+    private int guidelineCurruntTouchX, guidelineCurruntTouchY, guidelinePreviousTouchX, guidelinePreviousTouchY;
+    private int contentViewCurruntTouchY, contentViewPreviousTouchY;
 
     public GuidelineView(Context context) {
         Log.d(TAG, "GuidelineView: ");
@@ -60,54 +59,80 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     }
 
     private void fixGuidelineViewWidth() {
-        ViewGroup.LayoutParams params = guidelineView.getLayoutParams();
-        length = ViewManager.getRunningInstance().getScreenWidth() * 2;
-        params.width = length;
-        guidelineView.setLayoutParams(params);
-        Log.d(TAG, "fixGuidelineViewWidth: " + params.width);
+//
+//        ViewGroup.LayoutParams params = guidelineView.getLayoutParams();
+//        length = ViewManager.getRunningInstance().getScreenWidth() * 2;
+//        params.width = length;
+//        guidelineView.setLayoutParams(params);
+//        Log.d(TAG, "fixGuidelineViewWidth: " + params.width);
     }
 
     private void setListeners() {
         Log.d(TAG, "setListeners: ");
 
-        guidelineView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                //if (rotationGestureDetector.onTouchEvent(motionEvent)) {
-                switch (motionEvent.getAction()) {
+        contentView.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        switch (motionEvent.getAction()) {
 
-                    case MotionEvent.ACTION_DOWN:
-                        curruntTouchX = previousTouchX = (int) motionEvent.getRawX();
-                        curruntTouchY = previousTouchY = (int) motionEvent.getRawY();
-                        guideStick.setBackgroundColor(Color.BLUE);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        curruntTouchX = (int) motionEvent.getRawX();
-                        curruntTouchY = (int) motionEvent.getRawY();
+                            case MotionEvent.ACTION_DOWN:
+                                contentViewCurruntTouchY = contentViewPreviousTouchY = (int) motionEvent.getRawY();
+                                guideStick.setBackgroundColor(Color.RED);
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                contentViewCurruntTouchY = (int) motionEvent.getRawY();
 
-                        int diffX = (curruntTouchX - previousTouchX);
-                        int diffY = (curruntTouchY - previousTouchY);
+                                float diffY = (contentViewCurruntTouchY - contentViewPreviousTouchY) / 8f;
+                                guidelineView.animate().setDuration(0).rotationBy(diffY);
 
-                        guidelineView.setX(guidelineView.getX() + diffX);
-                        guidelineView.setY(guidelineView.getY() + diffY);
-
-//                      getWindowParams().x += diffX;
-//                      getWindowParams().y += diffY;
-//
-//                      Log.d(TAG, "onTouch: x: " + diffX + " y: " + diffY);
-//                      viewManager.updateViewLayout(getView(), getWindowParams());
-
-                        previousTouchX = curruntTouchX;
-                        previousTouchY = curruntTouchY;
-                        break;
-                    case MotionEvent.ACTION_CANCEL:
-                    case MotionEvent.ACTION_UP:
-                        guideStick.setBackgroundColor(Color.WHITE);
-                        break;
+                                contentViewPreviousTouchY = contentViewCurruntTouchY;
+                                break;
+                            case MotionEvent.ACTION_CANCEL:
+                            case MotionEvent.ACTION_UP:
+                                guideStick.setBackgroundResource(R.drawable.dotted_line);
+                                break;
+                        }
+                        return false;
+                    }
                 }
-                return false;
-            }
-        });
+        );
+
+        guidelineView.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        //if (rotationGestureDetector.onTouchEvent(motionEvent)) {
+                        switch (motionEvent.getAction()) {
+
+                            case MotionEvent.ACTION_DOWN:
+                                guidelineCurruntTouchX = guidelinePreviousTouchX = (int) motionEvent.getRawX();
+                                guidelineCurruntTouchY = guidelinePreviousTouchY = (int) motionEvent.getRawY();
+                                guideStick.setBackgroundColor(Color.GREEN);
+                                break;
+                            case MotionEvent.ACTION_MOVE:
+                                guidelineCurruntTouchX = (int) motionEvent.getRawX();
+                                guidelineCurruntTouchY = (int) motionEvent.getRawY();
+
+                                int diffX = (guidelineCurruntTouchX - guidelinePreviousTouchX);
+                                int diffY = (guidelineCurruntTouchY - guidelinePreviousTouchY);
+
+                                guidelineView.setX(guidelineView.getX() + diffX);
+                                guidelineView.setY(guidelineView.getY() + diffY);
+
+                                guidelinePreviousTouchX = guidelineCurruntTouchX;
+                                guidelinePreviousTouchY = guidelineCurruntTouchY;
+                                break;
+                            case MotionEvent.ACTION_CANCEL:
+                            case MotionEvent.ACTION_UP:
+                                guideStick.setBackgroundResource(R.drawable.dotted_line);
+                                break;
+                        }
+                        return false;
+                    }
+                }
+
+        );
 
     }
 
@@ -118,12 +143,12 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
         guidelineView.setRotation(angle);
     }
 
-    public void rotateAnticlockwiseBy(int r) {
+    public void rotateAnticlockwiseBy(float r) {
         Log.d(TAG, "rotateAnticlockwiseBy: " + r);
         guidelineView.animate().setDuration(0).rotationBy(-r);
     }
 
-    public void rotateClockwiseBy(int r) {
+    public void rotateClockwiseBy(float r) {
         Log.d(TAG, "rotateClockwiseBy: " + r);
         guidelineView.animate().setDuration(0).rotationBy(r);
     }
