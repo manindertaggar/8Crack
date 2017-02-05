@@ -29,6 +29,7 @@ public class ViewManager {
         runningInstance = this;
         this.context = context;
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+
         intializeViews();
         calculateScreenDimentions();
 
@@ -52,6 +53,16 @@ public class ViewManager {
         display.getSize(size);
         screenWidth = size.x;
         screenHeight = size.y;
+    }
+
+    public void removeAllViews() {
+        Log.d(TAG, "removeAllViews: ");
+        if (guidelineView != null) {
+            windowManager.removeView(guidelineView.getView());
+        }
+        if (handleView != null) {
+            windowManager.removeView(handleView.getView());
+        }
     }
 
     public void updateViewLayout(View view, WindowManager.LayoutParams layoutParams) {
@@ -113,5 +124,11 @@ public class ViewManager {
             return;
         }
         guidelineView.hide();
+    }
+
+    public static ViewManager init(Context applicationContext) {
+        if (runningInstance != null)
+            return runningInstance;
+        return new ViewManager(applicationContext);
     }
 }

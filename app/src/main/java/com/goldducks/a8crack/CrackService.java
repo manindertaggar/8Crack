@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class CrackService extends Service {
     private static final String TAG = CrackService.class.getCanonicalName();
-    ViewManager viewManager = ViewManager.getRunningInstance();
+    ViewManager viewManager;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -24,7 +24,7 @@ public class CrackService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "onCreate: ");
+        viewManager = ViewManager.init(getApplicationContext());
         viewManager.addViews();
     }
 
@@ -33,5 +33,12 @@ public class CrackService extends Service {
         super.onConfigurationChanged(newConfig);
         Log.d(TAG, "onConfigurationChanged: ");
         viewManager.onConfigrationChanged();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        viewManager.removeAllViews();
+        Log.d(TAG, "onDestroy: ");
     }
 }

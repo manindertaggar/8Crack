@@ -42,25 +42,30 @@ public class RunningAppDetectorService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-
-            public void run() {
-                String appOnTop = getAppRunningOnTop();
-                if (appOnTop.equals("com.miniclip.eightballpool") && !(lastDetectedRunningApp.equals(appOnTop))) {
-                    Log.d(TAG, "run: starting crackService");
-                    startService(new Intent(RunningAppDetectorService.this, CrackService.class));
-
-                } else if (lastDetectedRunningApp.equals("com.miniclip.eightballpool")) {
-                    Log.d(TAG, "run: stopping crackService");
-                    stopService(new Intent(RunningAppDetectorService.this, CrackService.class));
-                }
-                lastDetectedRunningApp = appOnTop;
-            }
-        }, 20000, 5000);
+        timer.scheduleAtFixedRate(
+                new TimerTask() {
+                    public void run() {
+                        // 0000000000000010000
+                        String appOnTop = getAppRunningOnTop();
+                        if (appOnTop.equals("com.miniclip.eightballpool")) {
+                            if (!lastDetectedRunningApp.equals(appOnTop)) {
+                                Log.d(TAG, "run: starting crackService");
+                                startService(new Intent(RunningAppDetectorService.this, CrackService.class));
+                            }
+                        } else {
+                            if (!lastDetectedRunningApp.equals(appOnTop)) {
+                                Log.d(TAG, "run: stopping crackService");
+                                stopService(new Intent(RunningAppDetectorService.this, CrackService.class));
+                            }
+                        }
+                        lastDetectedRunningApp = appOnTop;
+                    }
+                }, 20000, 5000);
 
 
         return START_STICKY;
     }
+
 
     private String getAppRunningOnTop() {
         if (Build.VERSION.SDK_INT >= 21) {

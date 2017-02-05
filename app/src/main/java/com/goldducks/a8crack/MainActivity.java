@@ -12,13 +12,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new ViewManager(getApplicationContext());
 
         PermissionManager.checkForOverlay(this);
         PermissionManager.checkForUsageAccess(this);
 
-//        startService(new Intent(this, RunningAppDetectorService.class));
-        startService(new Intent(this, CrackService.class));
+        startService(new Intent(this, RunningAppDetectorService.class));
+//        startService(new Intent(this, CrackService.class));
 
         finish();
     }
