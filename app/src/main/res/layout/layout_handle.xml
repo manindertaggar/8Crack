@@ -3,24 +3,51 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rlHandle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:alpha=".6"
-        android:clickable="true"
-        android:orientation="vertical"
-        android:rotation="-45">
+        android:alpha=".9"
+        android:orientation="vertical">
+
 
         <ImageView
-            android:layout_width="@dimen/handle_width"
+            android:id="@+id/ivClockwise"
+            android:layout_width="@dimen/handle_height"
             android:layout_height="@dimen/handle_height"
+            android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
-            android:background="#000"
+            android:clickable="true"
+            android:background="@drawable/grey_button"
+            android:padding="3dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/clk"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/ivAntiClockwise"
+            android:layout_width="@dimen/handle_height"
+            android:clickable="true"
+            android:layout_height="@dimen/handle_height"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/grey_button"
+            android:padding="3dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/aclk"
+            android:visibility="gone" />
+
+
+        <ImageView
             android:id="@+id/ivHandle"
+            android:layout_width="@dimen/handle_height"
+            android:layout_height="@dimen/handle_height"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:background="#4000"
+            android:clickable="true"
+            android:padding="3dp"
             android:scaleType="centerInside"
             android:src="@drawable/bolt" />
-
-    </RelativeLayout>
+    </LinearLayout>
 </FrameLayout>

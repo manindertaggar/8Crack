@@ -1,6 +1,7 @@
 package com.goldducks.a8crack;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,6 +24,7 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     private WindowManager.LayoutParams windowParams;
     private Boolean isShown = false;
     private int length;
+    private View guideStick;
     private ViewManager viewManager = ViewManager.getRunningInstance();
     private int curruntTouchX, curruntTouchY, previousTouchX, previousTouchY;
 
@@ -40,8 +42,8 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     private void intializeWindowParams() {
         Log.d(TAG, "intializeWindowParams: ");
         windowParams = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                         WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
@@ -52,8 +54,9 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
 
     private void intializeViews() {
         Log.d(TAG, "intializeViews: ");
-        contentView = LayoutInflater.from(context).inflate(R.layout.layout_guidline, null);
+        contentView = LayoutInflater.from(context).inflate(R.layout.layout_guideline, null);
         guidelineView = contentView.findViewById(R.id.guidlineView);
+        guideStick = contentView.findViewById(R.id.guideStick);
     }
 
     private void fixGuidelineViewWidth() {
@@ -65,22 +68,18 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
     }
 
     private void setListeners() {
-//        rlTouchListener.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                rotationGestureDetector.onTouchEvent(motionEvent);
-//                return true;
-//            }
-//        });
         Log.d(TAG, "setListeners: ");
 
         guidelineView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                //if (rotationGestureDetector.onTouchEvent(motionEvent)) {
                 switch (motionEvent.getAction()) {
+
                     case MotionEvent.ACTION_DOWN:
                         curruntTouchX = previousTouchX = (int) motionEvent.getRawX();
                         curruntTouchY = previousTouchY = (int) motionEvent.getRawY();
+                        guideStick.setBackgroundColor(Color.BLUE);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         curruntTouchX = (int) motionEvent.getRawX();
@@ -88,21 +87,28 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
 
                         int diffX = (curruntTouchX - previousTouchX);
                         int diffY = (curruntTouchY - previousTouchY);
-                        getWindowParams().x += diffX;
-                        getWindowParams().y += diffY;
 
-                        Log.d(TAG, "onTouch: x: " + diffX + " y: " + diffY);
-                        viewManager.updateViewLayout(getView(), getWindowParams());
+                        guidelineView.setX(guidelineView.getX() + diffX);
+                        guidelineView.setY(guidelineView.getY() + diffY);
+
+//                      getWindowParams().x += diffX;
+//                      getWindowParams().y += diffY;
+//
+//                      Log.d(TAG, "onTouch: x: " + diffX + " y: " + diffY);
+//                      viewManager.updateViewLayout(getView(), getWindowParams());
 
                         previousTouchX = curruntTouchX;
                         previousTouchY = curruntTouchY;
                         break;
+                    case MotionEvent.ACTION_CANCEL:
                     case MotionEvent.ACTION_UP:
+                        guideStick.setBackgroundColor(Color.WHITE);
                         break;
                 }
                 return false;
             }
         });
+
     }
 
     @Override
@@ -112,6 +118,15 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
         guidelineView.setRotation(angle);
     }
 
+    public void rotateAnticlockwiseBy(int r) {
+        Log.d(TAG, "rotateAnticlockwiseBy: " + r);
+        guidelineView.animate().rotationBy(-r);
+    }
+
+    public void rotateClockwiseBy(int r) {
+        Log.d(TAG, "rotateClockwiseBy: " + r);
+        guidelineView.animate().rotationBy(r);
+    }
 
     public View getView() {
         return contentView;
