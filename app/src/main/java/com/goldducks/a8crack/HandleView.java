@@ -29,7 +29,7 @@ public class HandleView {
     private int contentViewWidth, contentViewHeight;
     private ImageView ivClockwise, ivAntiClockwise;
     private Handler rotationHandler = new Handler();
-    private Runnable clockwiseRotationHandler, antiClockwiseRotationHandler;
+    private Runnable clockwiseRotationRunnable, antiClockwiseRotationRunnable;
 
 
     public HandleView(Context context) {
@@ -46,17 +46,19 @@ public class HandleView {
     }
 
     private void intializeRunnables() {
-        clockwiseRotationHandler = new Runnable() {
+        clockwiseRotationRunnable = new Runnable() {
             @Override
             public void run() {
-                rotateClockwiseBy(1);
+                viewManager.rotateClockwiseBy(1);
+                rotationHandler.postDelayed(this, 40);
             }
         };
 
-        antiClockwiseRotationHandler = new Runnable() {
+        antiClockwiseRotationRunnable = new Runnable() {
             @Override
             public void run() {
-                rotateAntiClockwiseBy(1);
+                viewManager.rotateAntiClockwiseBy(1);
+                rotationHandler.postDelayed(this, 40);
             }
         };
     }
@@ -116,9 +118,10 @@ public class HandleView {
                     case MotionEvent.ACTION_DOWN:
                         startRotatingClockwise();
                         break;
+
                     case MotionEvent.ACTION_CANCEL:
                     case MotionEvent.ACTION_UP:
-                        stopRotatingClockwise();
+                        stopRotating();
                         break;
 
                 }
@@ -138,7 +141,7 @@ public class HandleView {
 
                     case MotionEvent.ACTION_CANCEL:
                     case MotionEvent.ACTION_UP:
-                        stopAntiRotatingClockwise();
+                        stopRotating();
                         break;
                 }
                 return false;
@@ -147,19 +150,15 @@ public class HandleView {
     }
 
     private void startRotatingClockwise() {
-
-    }
-
-    private void stopRotatingClockwise() {
-
+        rotationHandler.post(clockwiseRotationRunnable);
     }
 
     private void startAntiRotatingClockwise() {
-
+        rotationHandler.post(antiClockwiseRotationRunnable);
     }
 
-    private void stopAntiRotatingClockwise() {
-
+    private void stopRotating() {
+        rotationHandler.removeCallbacksAndMessages(null);
     }
 
     private void showGuidelines() {

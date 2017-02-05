@@ -120,12 +120,12 @@ public class GuidelineView implements RotationGestureDetector.OnRotationGestureL
 
     public void rotateAnticlockwiseBy(int r) {
         Log.d(TAG, "rotateAnticlockwiseBy: " + r);
-        guidelineView.animate().rotationBy(-r);
+        guidelineView.animate().setDuration(0).rotationBy(-r);
     }
 
     public void rotateClockwiseBy(int r) {
         Log.d(TAG, "rotateClockwiseBy: " + r);
-        guidelineView.animate().rotationBy(r);
+        guidelineView.animate().setDuration(0).rotationBy(r);
     }
 
     public View getView() {
