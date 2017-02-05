@@ -1,6 +1,5 @@
 package com.goldducks.a8crack;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -18,16 +17,13 @@ public class ControlBoard {
     }
 
     public static void stop(Context context) {
+        Log.d(TAG, "stop: ");
         context.stopService(new Intent(context, CrackService.class));
     }
 
-    public boolean isServiceRunning(Context context, Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
+    public static boolean isServiceRunning() {
+        Boolean isServiceRunning = CrackService.isServiceRunning();
+        Log.d(TAG, "isServiceRunning: " + isServiceRunning);
+        return isServiceRunning;
     }
 }
