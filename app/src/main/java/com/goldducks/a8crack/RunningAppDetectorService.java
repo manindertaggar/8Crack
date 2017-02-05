@@ -49,13 +49,12 @@ public class RunningAppDetectorService extends Service {
                         String appOnTop = getAppRunningOnTop();
                         if (appOnTop.equals("com.miniclip.eightballpool")) {
                             if (!lastDetectedRunningApp.equals(appOnTop)) {
-                                Log.d(TAG, "run: starting crackService");
-                                startService(new Intent(RunningAppDetectorService.this, CrackService.class));
+                                ControlBoard.start(getBaseContext());
                             }
                         } else {
                             if (!lastDetectedRunningApp.equals(appOnTop)) {
                                 Log.d(TAG, "run: stopping crackService");
-                                stopService(new Intent(RunningAppDetectorService.this, CrackService.class));
+                                ControlBoard.stop(getBaseContext());
                             }
                         }
                         lastDetectedRunningApp = appOnTop;
