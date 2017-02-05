@@ -22,8 +22,7 @@ public class ViewManager {
     private static ViewManager runningInstance;
     private GuidelineView guidelineView;
     private HandleView handleView;
-    private Handler rotationHandler = new Handler();
-    private Runnable clocwiseRotationHandler,antiClockwiseRotationHandler;
+
     public ViewManager(Context context) {
         if (runningInstance != null)
             return;
@@ -36,6 +35,7 @@ public class ViewManager {
         calculateScreenDimentions();
 
     }
+
 
     private void intializeViews() {
         Log.d(TAG, "intializeViews: ");

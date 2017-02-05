@@ -28,6 +28,9 @@ public class HandleView {
     private ImageView ivHandle;
     private int contentViewWidth, contentViewHeight;
     private ImageView ivClockwise, ivAntiClockwise;
+    private Handler rotationHandler = new Handler();
+    private Runnable clockwiseRotationHandler, antiClockwiseRotationHandler;
+
 
     public HandleView(Context context) {
         Log.d(TAG, "HandleView: ");
@@ -35,11 +38,29 @@ public class HandleView {
 
         getViewDimentions();
 
+        intializeRunnables();
         intializeViews();
         intializeWindowParams();
         setListeners();
         tingleAfterDelay();
     }
+
+    private void intializeRunnables() {
+        clockwiseRotationHandler = new Runnable() {
+            @Override
+            public void run() {
+                rotateClockwiseBy(1);
+            }
+        };
+
+        antiClockwiseRotationHandler = new Runnable() {
+            @Override
+            public void run() {
+                rotateAntiClockwiseBy(1);
+            }
+        };
+    }
+
 
     private void tingleAfterDelay() {
         new Handler().postDelayed(new Runnable() {
@@ -91,18 +112,54 @@ public class HandleView {
         ivClockwise.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                viewManager.rotateClockwiseBy(1);
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startRotatingClockwise();
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP:
+                        stopRotatingClockwise();
+                        break;
+
+                }
                 return false;
             }
+
+
         });
 
         ivAntiClockwise.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                viewManager.rotateAntiClockwiseBy(1);
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startAntiRotatingClockwise();
+                        break;
+
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP:
+                        stopAntiRotatingClockwise();
+                        break;
+                }
                 return false;
             }
         });
+    }
+
+    private void startRotatingClockwise() {
+
+    }
+
+    private void stopRotatingClockwise() {
+
+    }
+
+    private void startAntiRotatingClockwise() {
+
+    }
+
+    private void stopAntiRotatingClockwise() {
+
     }
 
     private void showGuidelines() {
