@@ -59,15 +59,15 @@ public class HandleView {
                         WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
                         WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
-        windowParams.gravity = Gravity.TOP | Gravity.LEFT;
+        windowParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
 
-        windowParams.x = ViewManager.getRunningInstance().getScreenWidth() - contentViewWidth;
-        windowParams.y = 50;
+//        windowParams.x = ViewManager.getRunningInstance().getScreenWidth() - contentViewWidth;
+//        windowParams.y = 50;
     }
 
     private void intializeViews() {
         Log.d(TAG, "intializeViews: ");
-        contentView = LayoutInflater.from(context).inflate(R.layout.layout_handle, null);
+        contentView = LayoutInflater.from(context).inflate(R.layout.layout_handle2, null);
         rlHandle = (RelativeLayout) contentView.findViewById(R.id.rlHandle);
         ivHandle = (ImageView) contentView.findViewById(R.id.ivHandle);
     }
@@ -88,7 +88,7 @@ public class HandleView {
 
     private void showGuidelines() {
         Log.d(TAG, "showGuidelines: ");
-        contentView.animate().setInterpolator(new DecelerateInterpolator()).setDuration(250).rotation(135);
+        contentView.animate().setInterpolator(new DecelerateInterpolator()).setDuration(250).rotation(-360);
         ivHandle.setImageResource(R.drawable.close);
         isGuidelineShown = true;
         viewManager.showGuidelines();
@@ -96,7 +96,7 @@ public class HandleView {
 
     private void hideGuidelines() {
         Log.d(TAG, "hideGuidelines: ");
-        contentView.animate().setInterpolator(new DecelerateInterpolator()).setDuration(250).rotation(-135);
+        contentView.animate().setInterpolator(new DecelerateInterpolator()).setDuration(250).rotation(360);
         ivHandle.setImageResource(R.drawable.bolt);
         isGuidelineShown = false;
         viewManager.hideGuidelines();
@@ -111,14 +111,14 @@ public class HandleView {
     }
 
     public void onConfigrationChanged() {
-        windowParams.x = ViewManager.getRunningInstance().getScreenWidth() - contentViewWidth;
-        windowParams.y = 50;
-
-        Log.d(TAG, "onConfigrationChanged: " + windowParams.x + " " + windowParams.y);
+//        windowParams.x = ViewManager.getRunningInstance().getScreenWidth() - contentViewWidth;
+//        windowParams.y = 50;
+//
+//        Log.d(TAG, "onConfigrationChanged: " + windowParams.x + " " + windowParams.y);
     }
 
     public void getViewDimentions() {
-        contentViewWidth = (int) context.getResources().getDimension(R.dimen.handle_width);
+        contentViewWidth = (int) context.getResources().getDimension(R.dimen.handle_height);
         contentViewHeight = (int) context.getResources().getDimension(R.dimen.handle_height);
         Log.d(TAG, "getViewDimentions: " + contentViewWidth + " " + contentViewHeight);
     }
