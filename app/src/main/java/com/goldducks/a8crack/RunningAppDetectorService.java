@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -21,7 +22,8 @@ import java.util.TreeMap;
 
 public class RunningAppDetectorService extends Service {
     private static final String TAG = RunningAppDetectorService.class.getCanonicalName();
-    ActivityManager am;
+    private ActivityManager am;
+    private String lastDetectedRunningApp = "";
 
     @Override
     public void onCreate() {
@@ -43,10 +45,17 @@ public class RunningAppDetectorService extends Service {
         timer.scheduleAtFixedRate(new TimerTask() {
 
             public void run() {
-               String appOnTop= getAppRunningOnTop();
+                String appOnTop = getAppRunningOnTop();
+                if (appOnTop.equals("com.miniclip.eightballpool") && !(lastDetectedRunningApp.equals(appOnTop))) {
+                    Log.d(TAG, "run: starting crack");
+                    startService(new Intent(RunningAppDetectorService.this, CrackService.class));
 
+                } else if (lastDetectedRunningApp.equals("com.miniclip.eightballpool")) {
+                    Log.d(TAG, "run: stopping crack");
+                    stopService(new Intent(RunningAppDetectorService.this, CrackService.class));
+                }
+                lastDetectedRunningApp = appOnTop;
             }
-
         }, 20000, 5000);
 
 

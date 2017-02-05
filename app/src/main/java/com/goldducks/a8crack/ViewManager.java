@@ -40,6 +40,7 @@ public class ViewManager {
     }
 
     public void addViews() {
+        Log.d(TAG, "addViews: ");
         addGuidelineView();
         addHandleView();
     }
@@ -69,10 +70,12 @@ public class ViewManager {
     }
 
     private void addHandleView() {
+        Log.d(TAG, "addHandleView: ");
         windowManager.addView(handleView.getView(), handleView.getWindowParams());
     }
 
     private void addGuidelineView() {
+        Log.d(TAG, "addGuidelineView: ");
         windowManager.addView(guidelineView.getView(), guidelineView.getWindowParams());
         guidelineView.hide();
     }
