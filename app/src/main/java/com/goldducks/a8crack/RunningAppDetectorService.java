@@ -45,7 +45,6 @@ public class RunningAppDetectorService extends Service {
         timer.scheduleAtFixedRate(
                 new TimerTask() {
                     public void run() {
-                        // 0000000000000010000
                         String appOnTop = getAppRunningOnTop();
                         if (appOnTop.equals("com.miniclip.eightballpool")) {
                             if (!lastDetectedRunningApp.equals(appOnTop)) {
@@ -59,9 +58,7 @@ public class RunningAppDetectorService extends Service {
                         }
                         lastDetectedRunningApp = appOnTop;
                     }
-                }, 20000, 5000);
-
-
+                }, 20000, 1000);
         return START_STICKY;
     }
 
