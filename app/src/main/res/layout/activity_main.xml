@@ -7,29 +7,32 @@
 
     <LinearLayout
         android:id="@+id/ll"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="5dp">
+        <include layout="@layout/layout_show_in_playstore"/>
 
-            <TextView
-                android:id="@+id/tvToggleService"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/blue_button"
-                android:clickable="true"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Start"
-                android:textColor="#FFF"
-                android:textSize="22sp" />
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="10dp"-->
+            <!--app:cardCornerRadius="5dp"-->
+            <!--app:cardElevation="5dp">-->
 
-        </android.support.v7.widget.CardView>
+            <!--<TextView-->
+                <!--android:id="@+id/tvToggleService"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:background="@drawable/blue_button"-->
+                <!--android:clickable="true"-->
+                <!--android:gravity="center"-->
+                <!--android:padding="10dp"-->
+                <!--android:text="Start"-->
+                <!--android:textColor="#FFF"-->
+                <!--android:textSize="22sp" />-->
+
+        <!--</android.support.v7.widget.CardView>-->
 
     </LinearLayout>
 </ScrollView>
