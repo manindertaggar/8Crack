@@ -13,8 +13,7 @@ import android.util.Log;
 
 public class PermissionManager {
 
-    private static final String TAG = PermissionManager.class.getCanonicalName()
-            ;
+    private static final String TAG = PermissionManager.class.getCanonicalName();
 
     public static void checkForOverlay(Activity activity) {
         Log.d(TAG, "checkForOverlay: ");
