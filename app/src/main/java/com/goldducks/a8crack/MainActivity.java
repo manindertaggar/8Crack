@@ -17,7 +17,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        tvToggleService = (TextView) findViewById(R.id.tvToggleService);
+        intializeLayouts();
+        setLayouts();
+//     tvToggleService = (TextView) findViewById(R.id.tvToggleService);
 //        if (ControlBoard.isServiceRunning()) {
 //            tvToggleService.setText("Stop");
 //        } else {
@@ -34,10 +36,36 @@ public class MainActivity extends Activity {
 //        });
 
 //        PermissionManager.checkForOverlay(this);
-        PermissionManager.checkForUsageAccess(this);
+//        PermissionManager.checkForUsageAccess(this);
 
 //        startService(new Intent(this, RunningAppDetectorService.class));
 
+    }
+
+    private void setLayouts() {
+        if(PermissionManager.hasOverlay(this)){
+
+        }else{
+
+        }
+
+        if(PermissionManager.hasUsageAccess(this)){
+
+        }else{
+
+        }
+
+        if(PoolPackageManager.isInstalled(this)){
+
+        }else{
+
+        }
+
+    }
+
+    private void intializeLayouts() {
+        layoutStart = findViewById(R.id.layout_start);
+        layoutShowInPlaystore = findViewById(R.id.layout_show_in_playstore);
     }
 
     public void openInPlayStore(View v) {
