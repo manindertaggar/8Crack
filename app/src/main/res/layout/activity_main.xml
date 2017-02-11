@@ -11,6 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <include layout="@layout/layout_draw_permission" />
+
+        <include layout="@layout/layout_usage_permission" />
+
         <include layout="@layout/layout_show_in_playstore" />
 
         <include layout="@layout/layout_start" />
